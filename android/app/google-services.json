@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "586406917964",
+    "project_id": "just-tickets-4d084",
+    "storage_bucket": "just-tickets-4d084.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586406917964:android:5b3d1ca33166cf55d381e9",
+        "android_client_info": {
+          "package_name": "com.example.just_tickets"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHz2nVoct-Q3egs7yi-KtB90vtMIvcOGE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
