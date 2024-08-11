@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:just_tickets/Dashboard/presentation/screens/dashboard.dart';
-import 'package:just_tickets/my_tickets/presentation/screens/my_tickets.dart';
-import 'package:just_tickets/settings/presentation/screens/settings.dart';
-import 'package:just_tickets/store/presentation/screens/store.dart';
+import 'package:just_tickets/features/settings/screens/settings.dart';
+import 'package:just_tickets/features/store/screens/store.dart';
+import 'package:just_tickets/features/wallet/screens/wallet.dart';
+
+import 'features/dashboard/screens/dashboard.dart';
 
 final gnavIndexProvider = StateProvider<int>((ref) => 0);
 
@@ -22,9 +23,9 @@ class HomeBase extends ConsumerWidget {
         index: ref.watch(gnavIndexProvider.notifier).state,
         children: const <Widget>[
           DashboardPage(),
-          MyTicketsPage(),
+          WalletPage(),
           StorePage(),
-          Settings(),
+          SettingsPage(),
         ],
       ),
       bottomNavigationBar: Container(
@@ -40,7 +41,7 @@ class HomeBase extends ConsumerWidget {
           tabBackgroundColor: Colors.blue.withOpacity(0.5),
           tabs: const [
             GButton(icon: Icons.home, text: 'الرئيسية'),
-            GButton(icon: Icons.account_balance_wallet, text: 'تذاكري'),
+            GButton(icon: Icons.account_balance_wallet, text: 'المحفظة'),
             GButton(icon: Icons.store, text: 'المتجر'),
             GButton(icon: Icons.settings, text: 'الاعدادات'),
           ],
