@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_tickets/constants/colors.dart';
 import 'package:just_tickets/features/login/screens/login.dart';
-import 'package:just_tickets/home_base.dart';
+
 
 class SignInSignUpButton extends StatelessWidget {
   const SignInSignUpButton({
@@ -18,6 +18,7 @@ class SignInSignUpButton extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) =>  const LoginPage(),),);
+
       },
       child: Container(
         width: width,

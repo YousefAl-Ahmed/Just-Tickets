@@ -5,6 +5,7 @@
         "**/.hg": true,
         "**/CVS": true,
         "**/.DS_Store": true,
+
         "**/Thumbs.db": true,
         "web": true,
         "test": true,
@@ -21,4 +22,9 @@
         ".dart_tool",
         ".vscode"
     ]
+
+        "**/Thumbs.db": true
+    },
+    "hide-files.files": []
+
 }

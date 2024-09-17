@@ -33,6 +33,7 @@ class AppTheme {
         fontWeight: FontWeight.w900,
         color: Colors.white,
       )
+
     ),
     buttonTheme: const ButtonThemeData(
       buttonColor: Colors.blue,
