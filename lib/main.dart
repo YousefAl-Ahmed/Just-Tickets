@@ -28,10 +28,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme, // Apply the light theme
-      locale: Locale('ar', ''), // Set the locale to Arabic (or any RTL language)
+      locale:
+          Locale('ar', ''), // Set the locale to Arabic (or any RTL language)
 
-      home:  WelcomePage(),
-       localizationsDelegates: const [
+      home: WelcomePage(),
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         Locale('ar', ''), // Arabic, RTL language
         // Add other locales if needed
       ],
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
