@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_tickets/constants/colors.dart';
-import 'package:just_tickets/features/login/providers/login_providers.dart';
+import 'package:just_tickets/core/providers/login_register_providers.dart';
 import 'package:just_tickets/features/login/widgets/otp_modal.dart';
 
 class LoginButton extends ConsumerWidget {

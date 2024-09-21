@@ -1,12 +1,17 @@
+
 class UserClass {
   final String uid;
   final String phoneNumber;
-  final String? displayName;
+  final String? firstName;
+  final String? lastName;
+  final String? dateOfBirth;
 
   UserClass({
     required this.uid,
     required this.phoneNumber,
-    this.displayName,
+    this.firstName,
+    this.lastName,
+    this.dateOfBirth,
   });
 
   // Factory constructor to create a User from a Map, with validation
@@ -18,7 +23,10 @@ class UserClass {
     return UserClass(
       uid: data['uid'] as String,
       phoneNumber: data['phoneNumber'] as String,
-      displayName: data['displayName'] as String?,  // Nullable handling
+      firstName: data['firstName'] as String?,
+      lastName: data['lastName'] as String?,
+      dateOfBirth: data['dateOfBirth'] as String?,
+
     );
   }
 
@@ -27,7 +35,9 @@ class UserClass {
     return {
       'uid': uid,
       'phoneNumber': phoneNumber,
-      'displayName': displayName,
+      'firstName': firstName,
+      'lastName': lastName,
+      'dateOfBirth': dateOfBirth,
     };
   }
 }

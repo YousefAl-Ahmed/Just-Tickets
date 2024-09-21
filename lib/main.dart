@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:just_tickets/features/login/screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'features/onboarding/screens/welcome_page.dart';
 import 'firebase_options.dart';
@@ -29,9 +28,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme, // Apply the light theme
 
-      locale: Locale('ar', ''), // Set the locale to Arabic (or any RTL language)
+      locale: const Locale('ar', ''), // Set the locale to Arabic (or any RTL language)
 
-      home:  WelcomePage(),
+      home:  const WelcomePage(),
        localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
