@@ -17,8 +17,8 @@ class LoginPage extends ConsumerWidget {
     return Scaffold(
       body: Stack(
         children: [
-          SvgPicture.asset(
-            'assets/JTLOGO.svg',
+        SvgPicture.asset(
+            Assets.jtBackgroundImage,
             fit: BoxFit.cover,
             width: width,
             height: height,
