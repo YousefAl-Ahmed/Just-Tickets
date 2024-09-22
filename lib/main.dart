@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme, // Apply the light theme
 
+
       locale: const Locale('ar', ''), // Set the locale to Arabic (or any RTL language)
 
       home:  const WelcomePage(),
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         Locale('ar', ''), // Arabic, RTL language
         // Add other locales if needed
       ],
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
