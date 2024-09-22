@@ -14,21 +14,26 @@ class AppTheme {
         fontWeight: FontWeight.bold,
       ),
     ),
-    textTheme:  TextTheme(
-      titleLarge: GoogleFonts.poppins(
-    textStyle: const TextStyle(color: Colors.white, fontSize: 48, fontWeight: FontWeight.w900),
-  ),
-      titleMedium: const TextStyle(
+    textTheme:  const TextTheme(
+      titleLarge: const TextStyle(
+        fontSize: 48,
+        fontWeight: FontWeight.w900,
+        color: Colors.white,
+      ),
+      titleMedium: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
       ),
-      titleSmall: const TextStyle(
+      titleSmall: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
       ),
-      labelMedium: GoogleFonts.poppins(
-    textStyle: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w900),
-  ),
+      labelMedium: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w900,
+        color: Colors.white,
+      )
+
     ),
     buttonTheme: const ButtonThemeData(
       buttonColor: Colors.blue,
