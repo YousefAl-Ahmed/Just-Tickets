@@ -16,6 +16,7 @@ class DashboardPage extends ConsumerWidget {
     final user = ref.watch(authStateNotifierProvider);
 
     return Scaffold(
+      appBar: CustomAppBar(),
       body: Center(
         child: user != null
             ? Text('${user.firstName} | ${user.dateOfBirth} | ${user.phoneNumber}')

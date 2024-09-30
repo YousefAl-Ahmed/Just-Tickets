@@ -19,6 +19,7 @@ class MobileTextField extends ConsumerWidget {
         style: const TextStyle(color: Colors.white),
         controller: phoneController,
         keyboardType: TextInputType.phone,
+        
         decoration: const InputDecoration(
           labelText: 'رقم الهاتف',
           labelStyle: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),

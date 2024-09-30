@@ -49,7 +49,7 @@ class CircleFilter extends StatelessWidget {
         const SizedBox(height: 8), // Space between circle and text
         Text(
           label,
-          style: Theme.of(context).textTheme.bodyText1?.copyWith(
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Colors.black, // Text color
                 fontWeight: FontWeight.bold, // Adjust weight if needed
               ),

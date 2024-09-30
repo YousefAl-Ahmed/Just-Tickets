@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:just_tickets/features/settings/screens/settings.dart';
+import 'package:just_tickets/home_base.dart';
 import 'features/onboarding/screens/welcome_page.dart';
 import 'firebase_options.dart';
 import 'themes/app_theme.dart';
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
 
       locale: const Locale('ar', ''), // Set the locale to Arabic (or any RTL language)
 
-      home:  const WelcomePage(),
+      home:  const HomeBase(),
        localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

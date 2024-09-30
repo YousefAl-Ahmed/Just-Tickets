@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:just_tickets/constants/assets.dart';
 import 'package:just_tickets/constants/colors.dart';
+import 'package:just_tickets/core/providers/login_register_providers.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+        final user = ref.watch(authStateNotifierProvider);
+
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
@@ -65,22 +69,26 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                       ),
                       // User Info (Text)
-                      const Padding(
+                       Padding(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 8, vertical: 0.0),
+                            const EdgeInsets.symmetric(horizontal: 8, vertical: 0.0),
                         child: Column(
                           // crossAxisAlignment: CrossAxisAlignment.end,
                           // mainAxisSize: MainAxisSize.min,
                           children: [
+                            user == null
+                                ? const Text('')
+                                :
+                                
                             Text(
-                              'ياهلا، أحمد',
-                              style: TextStyle(
+                              'ياهلا، ${user.firstName}',
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
+                            const Text(
                               'حياك اشتري تذكرة',
                               style: TextStyle(
                                 color: Colors.white70,
@@ -90,7 +98,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                           width: 8), // Space between text and profile picture
 
                       // Profile Picture
@@ -109,5 +117,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(120); // The height of the AppBar
+  Size get preferredSize => const Size.fromHeight(120); // The height of the AppBar
 }
