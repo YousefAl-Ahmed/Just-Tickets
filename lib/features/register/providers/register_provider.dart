@@ -10,6 +10,11 @@ final lastNameControllerProvider = StateProvider<TextEditingController>((ref) {
   return TextEditingController();
 });
 
+// Provider for the email 
+final emailControllerProvider = StateProvider<TextEditingController>((ref) {
+  return TextEditingController();
+});
+
 // Provider for date of birth
 // Provider for the date TextEditingController
 final dateTextControllerProvider = StateProvider<TextEditingController>((ref) {

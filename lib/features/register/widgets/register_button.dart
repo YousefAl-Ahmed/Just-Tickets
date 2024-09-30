@@ -14,8 +14,9 @@ class RegisterButton extends ConsumerWidget {
     // Accessing the text controllers from Riverpod providers
     final firstNameController = ref.read(firstNameControllerProvider);
     final lastNameController = ref.read(lastNameControllerProvider);
-    final dateTextController = ref.read(dateTextControllerProvider); // Updated to use the TextEditingController for date
+    final dateTextController = ref.read(dateTextControllerProvider); 
     final phoneController = ref.read(phoneControllerProvider);
+    final emailController = ref.read(emailControllerProvider);
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     final width = size.width;
@@ -35,7 +36,8 @@ class RegisterButton extends ConsumerWidget {
             firstName: firstName,
             lastName: lastName,
             phoneNumber: phoneNumber,
-            dateOfBirth: dateOfBirth, // Pass the formatted date from the controller
+            dateOfBirth: dateOfBirth,
+            email: emailController.text.trim(),
           );
 
           // Navigate to HomeBase

@@ -1,3 +1,4 @@
+import 'package:just_tickets/classes/ticket.dart';
 
 class UserClass {
   final String uid;
@@ -5,6 +6,10 @@ class UserClass {
   final String? firstName;
   final String? lastName;
   final String? dateOfBirth;
+  final String? email;
+  final List<Ticket>? ticketList;  // To store the user's tickets
+  final String? nfcTagId;  // For NFC-based scanning
+  final double? walletBalance;  // For tracking wallet balance
 
   UserClass({
     required this.uid,
@@ -12,9 +17,12 @@ class UserClass {
     this.firstName,
     this.lastName,
     this.dateOfBirth,
+    this.email,
+    this.ticketList,
+    this.nfcTagId,
+    this.walletBalance = 0.0,
   });
 
-  // Factory constructor to create a User from a Map, with validation
   factory UserClass.fromMap(Map<String, dynamic> data) {
     if (data['uid'] == null || data['phoneNumber'] == null) {
       throw ArgumentError('Missing required fields for User');
@@ -26,11 +34,13 @@ class UserClass {
       firstName: data['firstName'] as String?,
       lastName: data['lastName'] as String?,
       dateOfBirth: data['dateOfBirth'] as String?,
-
+      email: data['email'] as String?,
+      ticketList: (data['ticketList'] as List?)?.map((e) => Ticket.fromMap(e)).toList(),  // Assuming Ticket is a class
+      nfcTagId: data['nfcTagId'] as String?,
+      walletBalance: data['walletBalance'] as double?,
     );
   }
 
-  // Converts a User object into a Map<String, dynamic>
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,
@@ -38,6 +48,10 @@ class UserClass {
       'firstName': firstName,
       'lastName': lastName,
       'dateOfBirth': dateOfBirth,
+      'email': email,
+      'ticketList': ticketList?.map((e) => e.toMap()).toList(),  // Assuming Ticket has a toMap method
+      'nfcTagId': nfcTagId,
+      'walletBalance': walletBalance,
     };
   }
 }

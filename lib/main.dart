@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
 
       locale: const Locale('ar', ''), // Set the locale to Arabic (or any RTL language)
 
-      home:  const HomeBase(),
+      home:  const WelcomePage(),
        localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

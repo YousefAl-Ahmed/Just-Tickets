@@ -19,6 +19,7 @@ class RegisterPage extends ConsumerWidget {
     final firstNameController = ref.watch(firstNameControllerProvider);
     final lastNameController = ref.watch(lastNameControllerProvider);
     final dateController = ref.watch(dateTextControllerProvider);  // Controller for the date field
+    final emailController = ref.watch(emailControllerProvider);
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
@@ -85,6 +86,22 @@ class RegisterPage extends ConsumerWidget {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your last name';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                                 TextFormField(
+  keyboardType: TextInputType.emailAddress,
+                      controller: emailController,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                        labelText: 'الايميل',
+                        labelStyle: TextStyle(color: Colors.white),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email';
                         }
                         return null;
                       },

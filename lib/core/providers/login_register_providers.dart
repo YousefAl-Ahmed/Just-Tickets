@@ -92,6 +92,7 @@ class AuthStateNotifier extends StateNotifier<UserClass?> {
     required String lastName,
     required String phoneNumber,
     required String dateOfBirth,
+    required String email,
   }) async {
     final uid = _auth.currentUser!.uid;
 
@@ -101,6 +102,7 @@ class AuthStateNotifier extends StateNotifier<UserClass?> {
       'lastName': lastName,
       'phoneNumber': phoneNumber,
       'dateOfBirth': dateOfBirth,
+      'email': email,
     };
 
     await _firestore.collection('users').doc(uid).set(userData);
