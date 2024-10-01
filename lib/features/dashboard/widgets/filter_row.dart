@@ -70,8 +70,8 @@ class _FilterModal extends StatelessWidget {
           const Divider(),
 
           // Price range filter
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.0),
             child: Row(
               children: [
                 Expanded(
@@ -83,7 +83,7 @@ class _FilterModal extends StatelessWidget {
                     keyboardType: TextInputType.number,
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(

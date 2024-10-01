@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:just_tickets/core/providers/event_providers.dart';
+import 'package:just_tickets/core/widgets/event_card.dart';
 import 'package:just_tickets/features/dashboard/widgets/custom_app_bar.dart';
 import 'package:just_tickets/features/dashboard/widgets/filter_row.dart';
 import '../widgets/circle_filter.dart'; // Import the reusable CircleFilter widget
 import 'package:just_tickets/constants/assets.dart'; // Assuming icons are stored in Assets class
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_tickets/core/providers/login_register_providers.dart';
 
@@ -14,15 +14,18 @@ class DashboardPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authStateNotifierProvider);
+    final eventsAsyncValue = ref.watch(eventProvider); // Fetch the events
+        final eventService = ref.watch(eventServiceProvider);
+
 
     return Scaffold(
       appBar: CustomAppBar(), // Your custom AppBar
-
       body: Padding(
         padding: const EdgeInsets.only(top: 20.0), // 20px below the AppBar
         child: Column(
+
           children: [
-            const Row(
+             const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CircleFilter(
@@ -41,13 +44,21 @@ class DashboardPage extends ConsumerWidget {
                   iconAsset: Assets.featuredEvents, // Path to your icon
                   label: 'الفعاليات المميزة',
                 ),
+  
               ],
             ),
             Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start, // Align text to the right (RTL)
+              crossAxisAlignment: CrossAxisAlignment.start, // Align text to the right (RTL)
               children: [
-                // const SizedBox(height: 20), // Add padding before title
+                              ElevatedButton(
+      onPressed: () async {
+        await eventService.addDummyEvent();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Dummy event added to Firestore!')),
+        );
+      },
+      child: const Text('+Event'),
+    ),
                 Padding(
                   padding: const EdgeInsets.only(right: 20.0),
                   child: Text(
@@ -58,11 +69,27 @@ class DashboardPage extends ConsumerWidget {
                         ),
                   ),
                 ),
-                const SizedBox(
-                    height: 20), // Space between title and filter row
+                const SizedBox(height: 20), // Space between title and filter row
 
                 // Now we move to the filter row (three filter buttons)
                 const FilterRow(),
+                const SizedBox(height: 20), // Space between filter row and events
+
+                // Dynamically fetching and displaying events
+                eventsAsyncValue.when(
+                  data: (events) => ListView.builder(
+                    shrinkWrap: true, // To prevent it from taking full screen height
+                    itemCount: events.length,
+                    itemBuilder: (context, index) {
+                      final event = events[index];
+                      return EventCard(
+                        event: event,
+                      );
+                    },
+                  ),
+                  loading: () => const Center(child: CircularProgressIndicator()),
+                  error: (error, stackTrace) => Center(child: Text('Error: $error')),
+                ),
               ],
             ),
           ],

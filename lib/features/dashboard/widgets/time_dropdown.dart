@@ -55,8 +55,11 @@ class _TimeDropdownState extends State<TimeDropdown> {
           print("Selected time filter: $_selectedTime");
         },
         underline: SizedBox(), // Remove underline
-        icon: SvgPicture.asset(
-          Assets.downArrow,
+        icon: Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: SvgPicture.asset(
+            Assets.downArrow,
+          ),
         ),
       ),
     );
