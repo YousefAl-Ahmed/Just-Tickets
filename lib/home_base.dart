@@ -19,10 +19,10 @@ class HomeBase extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Just Tickets'),
-        automaticallyImplyLeading: false,
-      ),
+      // appBar: AppBar(
+      //   title: const Text('Just Tickets'),
+      //   automaticallyImplyLeading: false,
+      // ),
       body: IndexedStack(
         index: ref.watch(gnavIndexProvider.notifier).state,
         children: const <Widget>[

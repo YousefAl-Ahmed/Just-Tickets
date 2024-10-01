@@ -23,8 +23,7 @@ class DashboardPage extends ConsumerWidget {
         child: Column(
           children: [
             const Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.start, // Distribute circles evenly
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CircleFilter(
                   iconAsset: Assets.theater, // Path to your icon

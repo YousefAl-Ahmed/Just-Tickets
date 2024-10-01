@@ -115,7 +115,7 @@ class _FilterModal extends StatelessWidget {
       onChanged: (bool? value) {
         // Handle checkbox changes
       },
-      title: Text(title, style: Theme.of(context).textTheme.bodyText1),
+      title: Text(title, style: Theme.of(context).textTheme.bodyLarge),
     );
   }
 }
