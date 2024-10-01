@@ -64,4 +64,6 @@ class Event {
       availableTickets: data['availableTickets'] as int,
     );
   }
+
+  get state => null;
 }

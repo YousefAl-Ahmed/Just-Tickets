@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-
+import 'package:just_tickets/features/dashboard/screens/event_details_page.dart';
 import 'package:just_tickets/features/dashboard/widgets/custom_app_bar.dart';
 import 'package:just_tickets/features/dashboard/widgets/filter_row.dart';
 import '../widgets/circle_filter.dart'; // Import the reusable CircleFilter widget
 import 'package:just_tickets/constants/assets.dart'; // Assuming icons are stored in Assets class
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:just_tickets/core/providers/login_register_providers.dart';
+import 'package:just_tickets/core/providers/event_providers.dart'; // Import event providers
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authStateNotifierProvider);
+    final eventsAsyncValue =
+        ref.watch(eventsProvider); // Watch the events provider
 
     return Scaffold(
       appBar: CustomAppBar(), // Your custom AppBar
@@ -22,24 +23,36 @@ class DashboardPage extends ConsumerWidget {
         padding: const EdgeInsets.only(top: 20.0), // 20px below the AppBar
         child: Column(
           children: [
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CircleFilter(
-                  iconAsset: Assets.theater, // Path to your icon
-                  label: 'المسرحيات',
+                  iconAsset: Assets.concerts, // Path to your icon
+                  label: 'الحفلات',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            EventDetailsPage(), // The page to navigate to
+                      ),
+                    );
+                  }, // Empty callback for now
                 ),
                 CircleFilter(
                   iconAsset: Assets.concerts, // Path to your icon
                   label: 'الحفلات',
+                  onTap: () {}, // Empty callback for now
                 ),
                 CircleFilter(
                   iconAsset: Assets.sports, // Path to your icon
                   label: 'الرياضة',
+                  onTap: () {}, // Empty callback for now
                 ),
                 CircleFilter(
                   iconAsset: Assets.featuredEvents, // Path to your icon
                   label: 'الفعاليات المميزة',
+                  onTap: () {}, // Empty callback for now
                 ),
               ],
             ),
@@ -47,7 +60,6 @@ class DashboardPage extends ConsumerWidget {
               crossAxisAlignment:
                   CrossAxisAlignment.start, // Align text to the right (RTL)
               children: [
-                // const SizedBox(height: 20), // Add padding before title
                 Padding(
                   padding: const EdgeInsets.only(right: 20.0),
                   child: Text(
@@ -61,8 +73,13 @@ class DashboardPage extends ConsumerWidget {
                 const SizedBox(
                     height: 20), // Space between title and filter row
 
-                // Now we move to the filter row (three filter buttons)
+                // Filter row (three filter buttons)
                 const FilterRow(),
+
+                // Add space before event list
+                const SizedBox(height: 20),
+
+                // Event List
               ],
             ),
           ],
