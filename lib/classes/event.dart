@@ -1,65 +1,67 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Event {
-  final String eventId;         // Unique identifier for the event
-  final String eventName;       // Name of the event
-  final String organizer;       // Organizer or host of the event
-  final String venue;           // Location of the event
-  final DateTime eventDate;     // Date and time of the event
-  final String description;     // Detailed description of the event
-  final int availableTickets;   // Number of available tickets
-  final double ticketPrice;     // Price per ticket
-  final bool isResellable;      // Whether tickets for this event can be resold
-  final List<String>? tags;     // Optional tags or categories for the event
-  final List<String>? images;   // Optional images for the event
+  final String id;
+  final String title;
+  final String description;
+  final double price;
+  final DateTime startTime;
+  final DateTime endTime;
+  final String locationName; // Optional, human-readable name
+  final GeoPoint location; // Use GeoPoint for latitude and longitude
+  final String imageUrl;
+  final String type; // Type of event (e.g., Concert, Sports)
+  final List<String> ticketClasses;
+  final int availableTickets;
 
   Event({
-    required this.eventId,
-    required this.eventName,
-    required this.organizer,
-    required this.venue,
-    required this.eventDate,
+    required this.id,
+    required this.title,
     required this.description,
+    required this.price,
+    required this.startTime,
+    required this.endTime,
+    required this.locationName,
+    required this.location, // Updated to use GeoPoint
+    required this.imageUrl,
+    required this.type,
+    required this.ticketClasses,
     required this.availableTickets,
-    required this.ticketPrice,
-    required this.images,
-    this.isResellable = false,
-    this.tags,
   });
 
-  // Factory constructor to create an Event from a Map<String, dynamic>
-  factory Event.fromMap(Map<String, dynamic> data) {
-    if (data['eventId'] == null || data['eventName'] == null) {
-      throw ArgumentError('Missing required fields for Event');
-    }
-
-    return Event(
-      eventId: data['eventId'] as String,
-      eventName: data['eventName'] as String,
-      organizer: data['organizer'] as String,
-      venue: data['venue'] as String,
-      eventDate: DateTime.parse(data['eventDate'] as String),
-      description: data['description'] as String,
-      availableTickets: data['availableTickets'] as int,
-      ticketPrice: data['ticketPrice'] as double,
-      isResellable: data['isResellable'] as bool? ?? false,
-      tags: (data['tags'] as List?)?.map((tag) => tag as String).toList(),
-      images: (data['images'] as List?)?.map((image) => image as String).toList(),
-    );
-  }
-
-  // Converts an Event object into a Map<String, dynamic>
+  // Convert Event to a Map (for Firebase)
   Map<String, dynamic> toMap() {
     return {
-      'eventId': eventId,
-      'eventName': eventName,
-      'organizer': organizer,
-      'venue': venue,
-      'eventDate': eventDate.toIso8601String(),
+      'id': id,
+      'title': title,
       'description': description,
+      'price': price,
+      'startTime': startTime.toIso8601String(),
+      'endTime': endTime.toIso8601String(),
+      'locationName': locationName,
+      'location': location, // Use GeoPoint here
+      'imageUrl': imageUrl,
+      'type': type,
+      'ticketClasses': ticketClasses,
       'availableTickets': availableTickets,
-      'ticketPrice': ticketPrice,
-      'isResellable': isResellable,
-      'tags': tags,
-      'images': images,
     };
+  }
+
+  // Create an Event object from a Map (from Firebase)
+  factory Event.fromMap(Map<String, dynamic> data) {
+    return Event(
+      id: data['id'] as String,
+      title: data['title'] as String,
+      description: data['description'] as String,
+      price: (data['price'] as num).toDouble(),
+      startTime: DateTime.parse(data['startTime']),
+      endTime: DateTime.parse(data['endTime']),
+      locationName: data['locationName'] as String,
+      location: data['location'] as GeoPoint, // Cast to GeoPoint
+      imageUrl: data['imageUrl'] as String,
+      type: data['type'] as String,
+      ticketClasses: List<String>.from(data['ticketClasses']),
+      availableTickets: data['availableTickets'] as int,
+    );
   }
 }
