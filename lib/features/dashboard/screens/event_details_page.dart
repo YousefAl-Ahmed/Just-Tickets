@@ -6,14 +6,21 @@ import 'package:just_tickets/services/date_format.dart';
 import '../provider/events_provider.dart';
 import 'package:flutter/services.dart';
 
-class EventDetailsPage extends ConsumerWidget {
+class EventDetailsPage extends ConsumerStatefulWidget {
   const EventDetailsPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final selectedEvent = ref.watch(selectedEventProvider); // Get the selected event
-        final user = ref.watch(authStateNotifierProvider);
-        
+  _EventDetailsPageState createState() => _EventDetailsPageState();
+}
+
+class _EventDetailsPageState extends ConsumerState<EventDetailsPage> {
+  String? selectedTicketClass; // State to hold the selected ticket class
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedEvent =
+        ref.watch(selectedEventProvider); // Get the selected event
+    final user = ref.watch(authStateNotifierProvider);
 
     return Scaffold(
       body: CustomScrollView(
@@ -51,7 +58,8 @@ class EventDetailsPage extends ConsumerWidget {
                 },
               ),
             ],
-            systemOverlayStyle: SystemUiOverlayStyle.light, // Light icons in status bar
+            systemOverlayStyle:
+                SystemUiOverlayStyle.light, // Light icons in status bar
           ),
           SliverList(
             delegate: SliverChildListDelegate([
@@ -71,7 +79,7 @@ class EventDetailsPage extends ConsumerWidget {
                         color: Color.fromARGB(255, 10, 9, 9),
                       ),
                     ),
-                    
+
                     const SizedBox(height: 8),
                     Row(
                       children: [
@@ -82,7 +90,8 @@ class EventDetailsPage extends ConsumerWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          formatEventDate(selectedEvent?.startTime ?? DateTime.now()),
+                          formatEventDate(
+                              selectedEvent?.startTime ?? DateTime.now()),
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.black54,
@@ -106,7 +115,8 @@ class EventDetailsPage extends ConsumerWidget {
                     // Event Times
                     Row(
                       children: [
-                        const Icon(Icons.access_time, size: 20, color: Colors.purple),
+                        const Icon(Icons.access_time,
+                            size: 20, color: Colors.purple),
                         const SizedBox(width: 8),
                         Text(
                           'من ${formatEventTimeHour(selectedEvent?.startTime ?? DateTime.now())} الى ${formatEventTimeHour(selectedEvent?.endTime ?? DateTime.now())}',
@@ -122,7 +132,8 @@ class EventDetailsPage extends ConsumerWidget {
                     // Location and Google Maps Placeholder
                     Row(
                       children: [
-                        const Icon(Icons.location_on, size: 20, color: Colors.purple),
+                        const Icon(Icons.location_on,
+                            size: 20, color: Colors.purple),
                         const SizedBox(width: 8),
                         Text(
                           selectedEvent?.locationName ?? '',
@@ -140,7 +151,8 @@ class EventDetailsPage extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.grey[300],
                       ),
-                      child: const Center(child: Text('Google Maps Placeholder')),
+                      child:
+                          const Center(child: Text('Google Maps Placeholder')),
                     ),
                     const SizedBox(height: 16),
                     const Divider(thickness: 1, color: Colors.grey),
@@ -159,21 +171,46 @@ class EventDetailsPage extends ConsumerWidget {
                       height: 80,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: selectedEvent?.availabeByTicketClass.length ?? 0,
+                        itemCount:
+                            selectedEvent?.availabeByTicketClass.length ?? 0,
                         itemBuilder: (context, index) {
-                          return Container(
-                            margin: const EdgeInsets.only(right: 8.0),
-                            padding: const EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey[200],
-                            ),
-                            child: Center(
-                              child: Text(
-                                selectedEvent?.availabeByTicketClass.keys.elementAt(index) ?? '',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black87,
+                          final ticketClass = selectedEvent
+                                  ?.availabeByTicketClass.keys
+                                  .elementAt(index) ??
+                              '';
+                          final isSelected = ticketClass == selectedTicketClass;
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedTicketClass =
+                                    ticketClass; // Set selected ticket class
+                              });
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 8.0),
+                              padding: const EdgeInsets.all(16.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: isSelected
+                                        ? const Color(0xFF7030A0)
+                                            .withOpacity(0.90)
+                                        : Colors.black.withOpacity(0.70),
+                                    offset: Offset(0, 0),
+                                    blurRadius: 9,
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                child: Text(
+                                  ticketClass,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                  ),
                                 ),
                               ),
                             ),
@@ -190,65 +227,67 @@ class EventDetailsPage extends ConsumerWidget {
         ],
       ),
       // Bottom Fixed Bar
-bottomNavigationBar: Container(
-  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0), // Adjust padding
-  decoration: const BoxDecoration(
-    color: Colors.white,
-    boxShadow: [
-      BoxShadow(
-        color: Colors.black12,
-        offset: Offset(0, -1), // Shadow effect at the top
-        blurRadius: 4.0,
-      ),
-    ],
-  ),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      // Price text
-      Text(
-        '${selectedEvent?.price?.toString() ?? '0'} رس',
-        style: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(
+            horizontal: 24.0, vertical: 16.0), // Adjust padding
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              offset: Offset(0, -1), // Shadow effect at the top
+              blurRadius: 4.0,
+            ),
+          ],
         ),
-      ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Price text
+            Text(
+              '${selectedEvent?.price?.toString() ?? '0'} رس',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
 
-      // Ticket booking button
-      ElevatedButton(
+            // Ticket booking button
+            ElevatedButton(
               onPressed: () {
-                  // Trigger the ticket purchase process
-                  ref.read(ticketPurchaseProvider(TicketPurchaseParams(
-                    user: user!,
-                    event: selectedEvent!,
-                    ticketClass: "Regular", // You can choose the ticket class
-                  )));
-                  
+                // Trigger the ticket purchase process
+                ref.read(ticketPurchaseProvider(TicketPurchaseParams(
+                  user: user!,
+                  event: selectedEvent!,
+                  ticketClass:
+                      selectedTicketClass!, // You can choose the ticket class
+                )));
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Ticket purchased successfully!')),
-                  );
-                },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF632D8C),
-          minimumSize: const Size(175, 40), // Increased size for better visibility
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8), // Set corner curve
-          ),
-        ),
-        child: const Text(
-          'احجز التذاكر',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.white,
-          ),
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text('Ticket purchased successfully!')),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF632D8C),
+                minimumSize:
+                    const Size(175, 40), // Increased size for better visibility
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8), // Set corner curve
+                ),
+              ),
+              child: const Text(
+                'احجز التذاكر',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-    ],
-  ),
-),
-
     );
   }
 }
