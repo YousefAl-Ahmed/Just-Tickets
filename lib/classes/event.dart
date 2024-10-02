@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:just_tickets/classes/ticket.dart';
 
 class Event {
   final String id;
@@ -9,10 +10,11 @@ class Event {
   final DateTime endTime;
   final String locationName; // Optional, human-readable name
   final GeoPoint location; // Use GeoPoint for latitude and longitude
-  final String imageUrl;
+  final List<String> imagesUrl;
   final String type; // Type of event (e.g., Concert, Sports)
-  final List<String> ticketClasses;
-  final int availableTickets;
+  final Map<String, int> availabeByTicketClass; 
+  final List<Ticket>? listOfTickets;  // To store the user's tickets
+
 
   Event({
     required this.id,
@@ -22,10 +24,10 @@ class Event {
     required this.endTime,
     required this.locationName,
     required this.location, // Updated to use GeoPoint
-    required this.imageUrl,
+    required this.imagesUrl,
     required this.type,
-    required this.ticketClasses,
-    required this.availableTickets,
+    required this.availabeByTicketClass,
+    required this.listOfTickets,
     this.price = 0.0, // Default price is 0.0
   });
 
@@ -42,10 +44,10 @@ class Event {
       'endTime': Timestamp.fromDate(endTime), // Convert DateTime to Timestamp
       'locationName': locationName,
       'location': location, // Use GeoPoint here
-      'imageUrl': imageUrl,
+      'imagesUrl': imagesUrl,
       'type': type,
-      'ticketClasses': ticketClasses,
-      'availableTickets': availableTickets,
+      'availabeByTicketClass': availabeByTicketClass,
+      'listOfTickets': listOfTickets?.map((e) => e.toMap()).toList(), 
     };
   }
 
@@ -63,10 +65,12 @@ class Event {
           .toDate(), // Convert Timestamp to DateTime
       locationName: data['locationName'] as String,
       location: data['location'] as GeoPoint, // Cast to GeoPoint
-      imageUrl: data['imageUrl'] as String,
+      imagesUrl: List<String>.from(data['imagesUrl']),
       type: data['type'] as String,
-      ticketClasses: List<String>.from(data['ticketClasses']),
-      availableTickets: data['availableTickets'] as int,
+      availabeByTicketClass:  Map<String, int>.from(data['availabeByTicketClass']),
+      listOfTickets: (data['listOfTickets'] as List)
+          .map((e) => Ticket.fromMap(e))
+          .toList(),
     );
   }
 }

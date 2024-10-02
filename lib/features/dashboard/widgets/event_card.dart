@@ -4,7 +4,7 @@ import 'package:just_tickets/classes/event.dart';
 import 'package:just_tickets/features/dashboard/provider/events_provider.dart';
 import 'package:just_tickets/features/dashboard/screens/event_details_page.dart';
 
-import '../../services/date_format.dart';
+import '../../../services/date_format.dart';
 
 class EventCard extends ConsumerWidget {
  
@@ -23,7 +23,7 @@ class EventCard extends ConsumerWidget {
      Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EventDetailsPage(),
+            builder: (context) => const EventDetailsPage(),
           ),
         );
       
@@ -94,7 +94,7 @@ class EventCard extends ConsumerWidget {
                         bottomLeft: Radius.circular(10),
                       ),
                      child: Image.network(
-                                 event.imageUrl,
+                                 event.imagesUrl[0],
                           
                                  fit: BoxFit.cover,
                                ),

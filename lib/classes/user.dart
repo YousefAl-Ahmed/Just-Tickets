@@ -7,7 +7,7 @@ class UserClass {
   final String? lastName;
   final String? dateOfBirth;
   final String? email;
-  final List<Ticket>? ticketList;  // To store the user's tickets
+  final List<Ticket>? bookedTickets;  // To store the user's tickets
   final String? nfcTagId;  // For NFC-based scanning
   final double? walletBalance;  // For tracking wallet balance
 
@@ -18,7 +18,7 @@ class UserClass {
     this.lastName,
     this.dateOfBirth,
     this.email,
-    this.ticketList,
+    this.bookedTickets,
     this.nfcTagId,
     this.walletBalance = 0.0,
   });
@@ -35,7 +35,7 @@ class UserClass {
       lastName: data['lastName'] as String?,
       dateOfBirth: data['dateOfBirth'] as String?,
       email: data['email'] as String?,
-      ticketList: (data['ticketList'] as List?)?.map((e) => Ticket.fromMap(e)).toList(),  // Assuming Ticket is a class
+      bookedTickets: (data['ticketList'] as List?)?.map((e) => Ticket.fromMap(e)).toList(),  // Assuming Ticket is a class
       nfcTagId: data['nfcTagId'] as String?,
       walletBalance: data['walletBalance'] as double?,
     );
@@ -49,7 +49,7 @@ class UserClass {
       'lastName': lastName,
       'dateOfBirth': dateOfBirth,
       'email': email,
-      'ticketList': ticketList?.map((e) => e.toMap()).toList(),  // Assuming Ticket has a toMap method
+      'ticketList': bookedTickets?.map((e) => e.toMap()).toList(),  // Assuming Ticket has a toMap method
       'nfcTagId': nfcTagId,
       'walletBalance': walletBalance,
     };
