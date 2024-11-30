@@ -10,4 +10,5 @@ class Assets {
   static const filter = 'assets/filter.svg';
   static const downArrow = 'assets/down_arrow.svg';
   static const jtBackgroundImage = 'assets/JTLOGO.svg';
+  static const wallet_card = 'assets/wallet_card.png';
 }

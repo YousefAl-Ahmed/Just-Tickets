@@ -38,23 +38,33 @@ class TicketCard extends ConsumerWidget {
           // Ticket Details
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                                        Text(eventAsyncValue.when(
-                          data: (event) {
-                            if (event != null) {
-                              return event.title;
-                            } else {
-                              return '';
-                            }
-                          },
-                          loading: () => '',
-                          error: (error, stackTrace) => '',
-                        )),
-                 Center(child: Text(ticket.ticketId, style: const TextStyle(color: CustomColors.grey),)),
+                  Text(eventAsyncValue.when(
+                    data: (event) {
+                      if (event != null) {
+                        return event.title;
+                      } else {
+                        return '';
+                      }
+                    },
+                    loading: () => '',
+                    error: (error, stackTrace) => '',
+                  )),
+                  Center(
+                      child: Text(
+                    ticket.ticketId,
+                    style: const TextStyle(color: CustomColors.grey),
+                  )),
+                  Center(
+                      child: Text(
+                    ticket.ticketClass,
+                    style: const TextStyle(color: CustomColors.grey),
+                  )),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: Row(
@@ -71,7 +81,7 @@ class TicketCard extends ConsumerWidget {
                           loading: () => '',
                           error: (error, stackTrace) => '',
                         )),
-                                    Text(eventAsyncValue.when(
+                        Text(eventAsyncValue.when(
                           data: (event) {
                             if (event != null) {
                               return event.locationName;
@@ -82,7 +92,6 @@ class TicketCard extends ConsumerWidget {
                           loading: () => '',
                           error: (error, stackTrace) => '',
                         )),
-                        
                       ],
                     ),
                   ),
@@ -94,7 +103,7 @@ class TicketCard extends ConsumerWidget {
           // Event Image
           eventAsyncValue.when(
             data: (event) {
-              if (event != null ) {
+              if (event != null) {
                 return Container(
                   width: 150,
                   height: 150,

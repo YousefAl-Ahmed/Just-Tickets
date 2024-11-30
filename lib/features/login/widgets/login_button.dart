@@ -2,65 +2,64 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_tickets/constants/colors.dart';
 import 'package:just_tickets/core/providers/login_register_providers.dart';
-import 'package:just_tickets/features/login/widgets/otp_modal.dart';
+import 'package:just_tickets/features/register/providers/register_provider.dart';
+import 'package:just_tickets/home_base.dart';
 
 class LoginButton extends ConsumerWidget {
   const LoginButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final phoneController = ref.watch(phoneControllerProvider); // Get the TextEditingController from the provider
-    ThemeData theme = Theme.of(context);
-    final size = MediaQuery.of(context).size;
-    final width = size.width;
+    final emailController = ref.watch(emailControllerProvider);
+    final passwordController = ref.watch(passwordControllerProvider);
 
-       return GestureDetector(
-      onTap: () {
-        final phoneNumber = phoneController.text.trim();
-        if (phoneNumber.isNotEmpty) {
-          ref.read(authStateNotifierProvider.notifier).signInWithPhoneNumber(
-            phoneNumber,
-            (String verificationId) {
-              // Store verificationId in the provider
-              ref.read(verificationIdProvider.notifier).state = verificationId;
-              // Hide the keyboard
-              FocusScope.of(context).unfocus();
+    return GestureDetector(
+      onTap: () async {
+        final email = emailController.text.trim();
+        final password = passwordController.text.trim();
 
-              // Show OTP verification modal sheet
-              showModalBottomSheet(
-                isScrollControlled: true,
-                context: context,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-                ),
-                builder: (BuildContext context) {
-                  return const OtpVerificationModal();
-                },
-              );
-            },
-          );
-        } else {
-          // Show error message if phone number is empty
+        if (email.isEmpty || password.isEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Please enter your mobile number')),
+            const SnackBar(content: Text('Please fill in all fields')),
+          );
+          return;
+        }
+
+        try {
+          // Use the sign-in method
+          await ref
+              .read(authStateNotifierProvider.notifier)
+              .signInWithEmailAndPassword(
+                email,
+                password,
+              );
+
+          // Navigate to the dashboard
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeBase()),
+          );
+        } catch (e) {
+          // Handle sign-in errors
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Login failed: $e')),
           );
         }
       },
       child: Container(
-        width: width,
+        width: double.infinity,
         height: 50,
-      
         decoration: BoxDecoration(
           color: CustomColors.purple,
           borderRadius: BorderRadius.circular(12),
-        ),  
-        child:  Center(
+        ),
+        child: const Center(
           child: Text(
             'تسجيل الدخول',
-            style: theme.textTheme.labelMedium
-            ),
+            style: TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
-      );
+      ),
+    );
   }
 }

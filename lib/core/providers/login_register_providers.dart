@@ -56,6 +56,55 @@ class AuthStateNotifier extends StateNotifier<UserClass?> {
     state = null;
   }
 
+  Future<void> registerUserWithEmailAndPassword({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String password,
+    required String dateOfBirth,
+  }) async {
+    try {
+      // Register the user with Firebase Authentication
+      final userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Save additional user data in Firestore
+      final uid = userCredential.user!.uid;
+      final userData = {
+        'uid': uid,
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'dateOfBirth': dateOfBirth,
+      };
+
+      await _firestore.collection('users').doc(uid).set(userData);
+
+      // Update the state
+      state = UserClass.fromMap(userData);
+    } catch (e) {
+      throw Exception('Registration failed: $e');
+    }
+  }
+
+  Future<void> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      // Sign in the user with Firebase Authentication
+      final userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Check Firestore for user data and update the state
+      await _checkAndSetUser(userCredential.user!.uid);
+    } catch (e) {
+      print('Login error: $e');
+      throw Exception('Login failed: $e');
+    }
+  }
+
   // Method to sign in with phone number and send OTP
   Future<void> signInWithPhoneNumber(
       String phoneNumber, Function(String) codeSent) async {

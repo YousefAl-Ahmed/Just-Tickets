@@ -4,11 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:just_tickets/constants/assets.dart';
 import 'package:just_tickets/constants/colors.dart';
 import 'package:just_tickets/core/providers/login_register_providers.dart';
+import 'package:just_tickets/features/login/screens/login.dart';
 
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-        final user = ref.watch(authStateNotifierProvider);
+    final user = ref.watch(authStateNotifierProvider);
+    final authService = ref.read(authProvider);
 
     final size = MediaQuery.of(context).size;
     final width = size.width;
@@ -69,25 +71,23 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                         ),
                       ),
                       // User Info (Text)
-                       Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 8, vertical: 0.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 0.0),
                         child: Column(
                           // crossAxisAlignment: CrossAxisAlignment.end,
                           // mainAxisSize: MainAxisSize.min,
                           children: [
                             user == null
                                 ? const Text('')
-                                :
-                                
-                            Text(
-                              'ياهلا، ${user.firstName}',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                                : Text(
+                                    'ياهلا، ${user.firstName}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                             const Text(
                               'حياك اشتري تذكرة',
                               style: TextStyle(
@@ -104,6 +104,17 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                       // Profile Picture
                     ],
                   ),
+                  IconButton(
+                    icon: Icon(Icons.logout),
+                    onPressed: () async {
+                      await authService.signOut();
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
+                    },
+                  ),
                   SvgPicture.asset(
                     Assets.bell, // Use SVG for the notification icon
                   ),
@@ -117,5 +128,6 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(120); // The height of the AppBar
+  Size get preferredSize =>
+      const Size.fromHeight(120); // The height of the AppBar
 }

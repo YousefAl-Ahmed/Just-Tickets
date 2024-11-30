@@ -10,8 +10,15 @@ final lastNameControllerProvider = StateProvider<TextEditingController>((ref) {
   return TextEditingController();
 });
 
-// Provider for the email 
+// Provider for the email
 final emailControllerProvider = StateProvider<TextEditingController>((ref) {
+  return TextEditingController();
+});
+final passwordControllerProvider = StateProvider<TextEditingController>((ref) {
+  return TextEditingController();
+});
+final confirmPasswordControllerProvider =
+    StateProvider<TextEditingController>((ref) {
   return TextEditingController();
 });
 

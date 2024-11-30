@@ -14,7 +14,8 @@ class WalletPage extends HookWidget {
       appBar: AppBar(
         title: const Text(
           'المحفظة',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w900, fontSize: 24),
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w900, fontSize: 24),
         ),
         backgroundColor: Colors.transparent,
         bottom: TabBar(
@@ -23,8 +24,8 @@ class WalletPage extends HookWidget {
           labelColor: Colors.black,
           unselectedLabelColor: Colors.grey,
           tabs: const [
-            Tab(text: 'Active Tickets'),
-            Tab(text: 'Used Tickets'),
+            Tab(text: 'التذاكر الفعالة'),
+            Tab(text: 'التذاكر السابقة'),
           ],
         ),
       ),
@@ -32,14 +33,12 @@ class WalletPage extends HookWidget {
         controller: tabController,
         children: const [
           ActiveTicketsPage(), // Active Tickets placeholder page
-          UsedTicketsPage(),   // Used Tickets placeholder page
+          UsedTicketsPage(), // Used Tickets placeholder page
         ],
       ),
     );
   }
 }
-
-
 
 // Placeholder for Used Tickets page
 class UsedTicketsPage extends StatelessWidget {
